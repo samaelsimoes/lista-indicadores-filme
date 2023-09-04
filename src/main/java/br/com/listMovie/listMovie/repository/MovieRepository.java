@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    @Query("select  m " +
-            "from   MovieProducer v, Producer p, Movie m " +
-            "where  m.id = v.movie.id " +
-            "and    p.id = v.producer.id " +
-            "and    v.producer.id = :producerId and m.winner = 'S' " +
-            "ORDER  BY m.year")
+    @Query("select  c " +
+            "from   MovieProducer a, Producer b, Movie c " +
+            "where  c.id = a.movie.id " +
+            "and    b.id = a.producer.id " +
+            "and    a.producer.id = :producerId and c.winner = 'S' " +
+            "ORDER  BY c.year")
     List<Movie> getMoviesWinnersByProducerId(@Param("producerId") Long producerId);
 
 }

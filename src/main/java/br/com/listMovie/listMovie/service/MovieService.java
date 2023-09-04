@@ -25,21 +25,26 @@ public class MovieService {
     }
 
     public DataResponse getProducersIntervalMinMax() {
-        List<Producer> producersWinner = this.producerRepositiry.getProducersWinners();
+        List<Producer> producersWinner = producerRepositiry.getProducersWinners();
         DataResponse response = new DataResponse();
+
         for (Producer producer : producersWinner) {
-            List<Movie> movies = this.movieRepository.getMoviesWinnersByProducerId(producer.getId());
-            Movie lastMovie = null;
-            for (Movie movie : movies) {
-                if (lastMovie != null) {
-                    ProducerInterval producerInterval = new ProducerInterval(producer.getName(),
-                            movie.getYear().intValue() - lastMovie.getYear().intValue(),
-                            lastMovie.getYear(),
-                            movie.getYear());
+            List<Movie> movies = movieRepository.getMoviesWinnersByProducerId(producer.getId());
+
+            if (!movies.isEmpty()) {
+                Movie firstMovie = movies.get(0);
+                Movie lastMovie = firstMovie;
+
+                for (int i = 1; i < movies.size(); i++) {
+                    Movie currentMovie = movies.get(i);
+                    int interval = currentMovie.getYear().intValue() - lastMovie.getYear().intValue();
+
+                    ProducerInterval producerInterval = new ProducerInterval(producer.getName(), interval, lastMovie.getYear(), currentMovie.getYear());
                     response.addMax(producerInterval);
                     response.addMin(producerInterval);
+
+                    lastMovie = currentMovie;
                 }
-                lastMovie = movie;
             }
         }
 
