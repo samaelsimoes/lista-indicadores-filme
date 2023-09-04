@@ -10,13 +10,12 @@ public class ProducerService {
 
     @Autowired
     private ProducerRepository producerRepositiry;
+    public Producer save(Producer producer) {
+        return this.producerRepositiry.save(producer);
+    }
 
     public Producer getByName(String name) {
         return this.producerRepositiry.getEntityByName(name);
     }
 
-
-    public Producer save(Producer producer) {
-        return this.producerRepositiry.save(producer);
-    }
 }

@@ -11,8 +11,6 @@ public class MovieProducerService {
     @Autowired
     private MovieProducerRepositiry movieProducerRepositiry;
 
-
-
     public MovieProducer save(MovieProducer movieProducer) {
         return this.movieProducerRepositiry.save(movieProducer);
     }

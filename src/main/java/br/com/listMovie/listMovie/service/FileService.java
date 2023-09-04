@@ -7,9 +7,6 @@ import br.com.listMovie.listMovie.commons.Utils;
 import com.opencsv.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.core.io.ClassPathResource;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URISyntaxException;
@@ -17,7 +14,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.nio.charset.StandardCharsets;
 
 @Service
 public class FileService {
@@ -37,7 +33,7 @@ public class FileService {
         try {
             List<String[]> contentFile = readFiles(FILE_PATH);
 
-            for (String[] line : contentFile) {
+            contentFile.stream().forEach(line -> {
                 Long year = Long.parseLong(line[0]);
                 String title = line[1];
                 String studios = line[2];
@@ -47,10 +43,11 @@ public class FileService {
                 Movie movie = movieService.save(new Movie(year, title, studios, winner));
 
                 String[] producerNames = producers.split(",");
-                for (String producerName : producerNames) {
-                    movieToProducer(movie, producerName.trim());
-                }
-            }
+                Arrays.stream(producerNames)
+                        .map(String::trim)
+                        .forEach(producerName -> movieToProducer(movie, producerName));
+            });
+
             System.out.println("CSV CARREGADO COM SUCESSO!");
         } catch (Exception e) {
             e.printStackTrace();
