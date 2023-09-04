@@ -39,4 +39,11 @@ Toda vez que você subir o projeto ele deve criar o banco H2 conforme o print, i
 Após você poderá consultar em http://localhost:8080/h2-console se as tabelas foram criadas e se os dados foram inseridos!
 ![image](https://github.com/samaelsimoes/lista-indicadores-filme/assets/29442511/e3a7ac42-0fee-4ee4-ad7f-9e8f90245dea)
 
+Realizando Testes na API:
+
+Para avaliar e testar a funcionalidade da API, você tem à sua disposição duas opções: a utilização direta do seu navegador ou a utilização de ferramentas especializadas que simplificam a criação e envio de requisições. Um exemplo notável dessas ferramentas é o Postman.
+
+Você pode utilizar essas opções para testar o endpoint responsável por fornecer informações sobre os produtores com os intervalos mínimos e máximos entre os prêmios dos filmes.
+
+![image](https://github.com/samaelsimoes/lista-indicadores-filme/assets/29442511/193a5c14-8425-443f-b3c7-a86bd0128f52)
 
