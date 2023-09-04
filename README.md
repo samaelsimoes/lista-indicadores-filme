@@ -23,3 +23,20 @@ bem como o(s) produtor(es) que conquistaram dois prêmios mais rapidamente.
 Para executar a aplicação:
 - Você precisa ter o Java 8 instalado e uma IDE configurada com o Maven. Após configurar o Maven, você pode clonar o repositório do projeto no 
 GitHub https://github.com/samaelsimoes/lista-indicadores-filme
+
+usando o comando "git clone endereco", onde "endereco" deve ser substituído pela URL do repositório. 
+Em seguida, você pode importar o projeto Maven em sua IDE, selecionando a pasta onde o projeto foi baixado. 
+O Maven cuidará do download automático das dependências necessárias e, quando o download estiver concluído, a aplicação estará pronta para ser compilada e executada.
+
+Para testar a API, você pode utilizar um navegador ou ferramentas como o Postman ou Insonia para montar e enviar requisições aos endpoints da API, 
+incluindo o endpoint para obter informações sobre os produtores de filmes com intervalos de prêmios específicos.
+
+Toda vez que você subir o projeto ele deve criar o banco H2 conforme o print, ira apresentar no terminal do intellij
+![image](https://github.com/samaelsimoes/lista-indicadores-filme/assets/29442511/7c03b81a-6f86-4e1c-be92-be9a2ce0be94)
+![image](https://github.com/samaelsimoes/lista-indicadores-filme/assets/29442511/7643a4c9-e481-412f-afba-afd819ce36f2)
+
+
+Após você poderá consultar em http://localhost:8080/h2-console se as tabelas foram criadas e se os dados foram inseridos!
+![image](https://github.com/samaelsimoes/lista-indicadores-filme/assets/29442511/e3a7ac42-0fee-4ee4-ad7f-9e8f90245dea)
+
+
