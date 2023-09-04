@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 @EntityScan(basePackages = "br.com.listMovie.listMovie.entity")
 @SpringBootApplication
 public class ListMoviesApplication {
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(ListMoviesApplication.class, args);
 	}
