@@ -17,7 +17,7 @@ Principais funcionalidades da MovieAPI incluem:
 - Criação de base de dados ao iniciar a API: Quando a API é iniciada, ela cria uma base de dados em memória para armazenar os dados dos filmes.
 - Leitura de arquivo CSV: A API lê um arquivo CSV localizado na pasta "Resources/files/movielist.csv" e carrega os dados desse arquivo na base de dados.
 - Endpoint para consulta de produtores: Através do endpoint com o endereço "movie/producers/interval", 
-os usuários podem obter informações sobre o(s) produtor(es) com o maior intervalo entre dois prêmios consecutivos, 
+- os usuários podem obter informações sobre o(s) produtor(es) com o maior intervalo entre dois prêmios consecutivos, 
 bem como o(s) produtor(es) que conquistaram dois prêmios mais rapidamente.
 
 Para executar a aplicação:
