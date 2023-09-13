@@ -8,7 +8,8 @@ public class DataResponse {
     private List<ProducerInterval> min;
 
     private List<ProducerInterval> max;
-
+    private List<ProducerInterval> minIntervals;
+    private List<ProducerInterval> maxIntervals;
     public DataResponse() {
     }
 
@@ -17,10 +18,19 @@ public class DataResponse {
         this.max = max;
     }
 
+    public void setMinIntervals(List<ProducerInterval> producerIntervals) {
+        this.min = producerIntervals;
+    }
+
+    public void setMaxIntervals(List<ProducerInterval> producerIntervals) {
+        this.max = producerIntervals;
+    }
+
     public void addMin(ProducerInterval producerInterval) {
         if (this.min == null) {
             this.min = new ArrayList<>();
         }
+
         if (min.isEmpty()) {
             this.min.add(producerInterval);
         } else if (producerInterval.getInterval() < this.min.get(0).getInterval()) {
@@ -35,6 +45,7 @@ public class DataResponse {
         if (this.max == null) {
             this.max = new ArrayList<>();
         }
+
         if (max.isEmpty()) {
             this.max.add(producerInterval);
         } else if (producerInterval.getInterval() > this.max.get(0).getInterval()) {
