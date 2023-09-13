@@ -31,50 +31,55 @@ public class FileService {
 
     public void buildDataFile() {
         try {
-            List<String[]> contentFile = readFiles(FILE_PATH);
-
-            contentFile.stream().forEach(line -> {
+            List<String[]> contentFile = readFile();
+            Movie movie = null;
+            for (String[] line : contentFile) {
                 Long year = Long.parseLong(line[0]);
                 String title = line[1];
                 String studios = line[2];
                 String producers = line[3];
-                String winner = Utils.validaString(line[4]).equalsIgnoreCase("yes") ? "S" : "N";
-
-                Movie movie = movieService.save(new Movie(year, title, studios, winner));
-
-                String[] producerNames = producers.split(",");
-                Arrays.stream(producerNames)
-                        .map(String::trim)
-                        .forEach(producerName -> movieToProducer(movie, producerName));
-            });
-
-            System.out.println("CSV CARREGADO COM SUCESSO!");
+                String winner = Utils.validaString(line[4]).toLowerCase().equalsIgnoreCase("yes") ? "S" : "N";
+                movie = new Movie(year, title, studios, winner);
+                movie = this.movieService.save(movie);
+                String[] productorsSplit = producers.split(",");
+                for (String producerName : productorsSplit) {
+                    if (producerName.contains(" and ")) {
+                        String[] prdcsAux = producerName.split(" and ");
+                        for (String name : prdcsAux) {
+                            if (name != null && !name.equalsIgnoreCase("")) {
+                                this.linkMovieToProducer(movie, name);
+                            }
+                        }
+                    } else {
+                        if (producerName != null && !producerName.equalsIgnoreCase("")) {
+                            this.linkMovieToProducer(movie, producerName);
+                        }
+                    }
+                }
+            }
+            System.out.println("ARQUIVO CARREGADO COM SUCESSO NA BASE DE DADOS.");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("ERRO AO CARREGAR OS DADOS: " + e.getMessage());
+            System.out.println("ERRO AO CARREGAR OS DADOS DO ARQUIVO: " + e.getMessage());
         }
     }
 
-    private Producer vallInfoProducer(Movie movie, String producerName){
-        return producerService.save(new Producer(producerName.trim()));
-    }
-
-
-    private void movieToProducer(Movie movie, String producerName) {
-        if (movie != null && !producerName.trim().isEmpty()) {
-            Producer producer = producerService.getByName(producerName.trim());
-
-            if (producer == null) {
-                producer = vallInfoProducer(movie, producerName);
+    private void linkMovieToProducer(Movie movie, String producerName) {
+        if (movie != null && !Utils.validaString(producerName).isEmpty()) {
+            Producer producer = this.producerService.getByName(producerName.trim());
+            if (producer == null || producer.getId() == null) {
+                producer = this.producerService.save(new Producer(producerName.trim()));
             }
 
-            movieProducerService.save(new MovieProducer(movie, producer));
+            MovieProducer movieProducer = new MovieProducer(movie, producer);
+            this.movieProducerService.save(movieProducer);
         }
+
     }
 
-    private List<String[]> readFiles(String filePath) throws IOException {
+    private List<String[]> readFile() {
         try {
-            URL res = getClass().getClassLoader().getResource(filePath);
+            URL res = getClass().getClassLoader().getResource(FILE_PATH);
             Reader reader = Files.newBufferedReader(Paths.get(res.toURI()));
 
             final CSVParser parser = new CSVParserBuilder().withSeparator(';').withIgnoreQuotations(false).build();
@@ -86,4 +91,5 @@ public class FileService {
             throw new RuntimeException(e);
         }
     }
+
 }
